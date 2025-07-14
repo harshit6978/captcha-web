@@ -1,19 +1,11 @@
-import {
-  GoogleAuthProvider,
-  signInWithPopup,
-  signOut,
-  signInWithEmailAndPassword,
-} from 'firebase/auth';
-import {
-  collection,
-  getDocs,
-  query,
-  where,
-} from 'firebase/firestore';
+import { GoogleAuthProvider, signInWithPopup, signOut, signInWithEmailAndPassword } from 'firebase/auth';
+import { collection, getDocs, query, where, } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import { auth, db } from '../firebase'; // your config
 import React, { useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
+import logo from '../logo_no_background.png'; // adjust path if needed
+
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -75,43 +67,53 @@ const Login = () => {
     <>
       <ToastContainer />
 
-      <div className="login-box">
-        <h2>Login</h2>
-        <form onSubmit={handleEmailLogin}>
-          <input
-            type="email"
-            required
-            className='dropdown'
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Email"
-          />
-          <input
-            type="password"
-            required
-            className='dropdown'
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Password"
-          />
-          <button type="submit" className='withdraw-btn '>Login</button>
-        </form>
+      <div className="login-page">
+        <div className="login-container">
+          <div className="logo-section">
+            <img src={logo} alt="Captcha Logo" className="login-logo" />
+            <h1 className="site-title">Captcha Work : Typing Job</h1>
+          </div>
 
-        <div style={{ margin: '15px 0', textAlign: 'center' }}>
-          <span>or</span>
+          <div className="login-box">
+            <h2 className='login-title'>Login</h2>
+            <form onSubmit={handleEmailLogin}>
+              <input
+                type="email"
+                required
+                className='dropdown'
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Email"
+              />
+              <input
+                type="password"
+                required
+                className='dropdown'
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Password"
+              />
+              <button type="submit" className='withdraw-btn '>Login</button>
+            </form>
+
+            <div style={{ margin: '15px 0', textAlign: 'center' }}>
+              <span>or</span>
+            </div>
+
+            <button onClick={handleGoogleLogin} className="google-btn">
+              <img
+                src="https://developers.google.com/identity/images/g-logo.png"
+                alt="Google"
+                style={{ width: 20, marginRight: 8 }}
+              />
+              Sign in with Google
+            </button>
+
+            {errorMsg && <p style={{ color: 'red' }}>{errorMsg}</p>}
+          </div>
         </div>
-
-        <button onClick={handleGoogleLogin} className="google-btn">
-          <img
-            src="https://developers.google.com/identity/images/g-logo.png"
-            alt="Google"
-            style={{ width: 20, marginRight: 8 }}
-          />
-          Sign in with Google
-        </button>
-
-        {errorMsg && <p style={{ color: 'red' }}>{errorMsg}</p>}
       </div>
+
     </>
   );
 };
